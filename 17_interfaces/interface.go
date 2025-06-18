@@ -2,16 +2,33 @@ package main
 
 import "fmt"
 
-//Payment gateway
+// We don't tell which interface we are implemented goLang will do implesentely (auto)
+// only condition is that method attributes will the same
+// eg. For paymenter is pay(amount float32) and func (r razorpay) pay(amount float32) {}
+// pay(amount float32) should be same
 
-type payment struct {
+// Other Language we specify which interface we are implemented
+
+// atleast one method
+type paymenter interface {
+	pay(amount float32)
+	refund(amount float32, account string)
 }
 
+//Payment gateway
+type payment struct {
+	gateway paymenter
+}
+
+// Open close Principle
 func (p payment) makePayment(amount float32) {
 	// razorpayPaymentGw := razorpay{}
 	// razorpayPaymentGw.pay(amount)
-	stripepayPaymentGw := stripe{}
-	stripepayPaymentGw.pay(amount)
+	// stripepayPaymentGw := stripe{}
+	// stripepayPaymentGw.pay(amount)
+	// fakepayment := fakepayment{}
+	// fakepayment.pay(amount)
+	p.gateway.pay(amount)
 
 }
 
@@ -22,14 +39,38 @@ func (r razorpay) pay(amount float32) {
 	fmt.Println("making payment using razorpay", amount)
 }
 
-type stripe struct{}
+// type stripe struct{}
 
-func (s stripe) pay(amount float32) {
+// func (s stripe) pay(amount float32) {
+// 	// logic to make payment
+// 	fmt.Println("making payment using stripe", amount)
+// }
+
+type fakepayment struct{}
+
+func (f fakepayment) pay(amount float32) {
 	// logic to make payment
-	fmt.Println("making payment using stripe", amount)
+	fmt.Println("making payment using fakepayment", amount)
+}
+
+type paypal struct{}
+
+func (p paypal) pay(amount float32) {
+	// logic to make payment
+	fmt.Println("making payment using paypal", amount)
+}
+
+func (p paypal) refund(amount float32, account string) {
+	// logic to make payment
+	fmt.Println("Payment is Refunded From PayPal in account: ", account, "amount is: ", amount)
 }
 
 func main() {
-	newPayment := payment{}
+	// razorpayPaymentGw := razorpay{}
+	// fakeGw := fakepayment{}
+	paypalGw := paypal{}
+	newPayment := payment{
+		gateway: paypalGw,
+	}
 	newPayment.makePayment(100)
 }
