@@ -1,15 +1,24 @@
 package main
 
 import (
+	"fmt"
 	"time"
 )
 
 // order struct
+
+type customer struct {
+	name  string
+	phone string
+}
+
+// composition (code reuse)
 type order struct {
 	id        string
 	amount    float32
 	status    string
 	createdAt time.Time // nanosecond precision
+	customer            // embeded struct
 }
 
 // construction hack
@@ -37,6 +46,28 @@ func (o order) getAmount() float32 {
 }
 
 func main() {
+
+	// newCustomer := customer{
+	// 	name:  "john",
+	// 	phone: "123456789",
+	// }
+
+	newOrder := order{
+		id:     "1",
+		amount: 30,
+		status: "received",
+		//customer: newCustomer,
+		customer: customer{
+			name:  "john",
+			phone: "123456789",
+		},
+	}
+
+	// change name
+	newOrder.customer.name = "Bob"
+
+	fmt.Println(newOrder)
+	//fmt.Println(newOrder.customer)
 
 	// // inline struct
 	// language := struct {
