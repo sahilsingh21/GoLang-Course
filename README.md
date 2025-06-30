@@ -175,12 +175,3 @@ At course milestones, work on small tools like:
 
 Each project integrates many course concepts, helping you move from learning to building.
 
----
-
-## License & Contribution
-
-* 🔓 Open‑source **MIT License**
-* 📌 Contributors welcome! Submit PRs or open issues
-* ❓ Questions? Use GitHub Discussions or file an issue
-
----
