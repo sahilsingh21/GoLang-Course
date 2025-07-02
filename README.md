@@ -173,5 +173,5 @@ At course milestones, work on small tools like:
 * Concurrent workers or pipelines
 * Simple HTTP servers or APIs with Go’s `net/http`
 
-Each project integrates many course concepts, helping you move from learning to building.
+Each project integrates many course concepts, helping you move from learning to building..
 
